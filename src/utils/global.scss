@@ -1,0 +1,311 @@
+@keyframes :global(dialogScaleEnter) {
+  from{
+    transform:scale(.8);
+  }
+
+  50%{
+    transform: scale(1.2);
+  }
+
+  to{
+    transform: scale(1);
+  }
+}
+
+@keyframes :global(dialogScaleOut) {
+  from{
+    transform:scale(1);
+  }
+
+  to{
+    transform: scale(.2);
+  }
+}
+
+:global{
+  .ant-menu-vertical .ant-menu-item,
+  .ant-menu-inline .ant-menu-item,
+  .ant-menu-vertical .ant-menu-submenu-title,
+  .ant-menu-inline .ant-menu-submenu-title{
+    font-size: 14px !important;
+  }
+
+  .ant-menu-sub .ant-menu-item{
+    font-size: 12px !important;
+  }
+  #root{
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  body.login{
+    background: #f7fafc;
+  }
+
+  .app-container{
+    width: 100%;
+    height: 100%;
+  }
+
+  #login_canvas{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    top:0;
+    left:0;
+  }
+
+  .app-layout{
+    height:inherit;
+    min-width:550px;
+    //padding-top:52px;
+  }
+
+  #app-content{
+    background: #ececec;
+    height: inherit;
+    overflow: auto;
+
+    transition: margin .3s linear;
+  }
+
+  #app-content-noSideBar{
+    background: #ececec;
+    height: inherit;
+    overflow: auto;
+
+    transition: margin .3s linear;
+  }
+
+  .left{  float:left;  }
+
+  .right{ float:right; }
+
+  .clear::after{ content: ""; display: table;  clear: both; }
+
+  .inner-app-content{
+    // height:inherit;
+    // padding: 20px;
+    // margin: 20px;
+    background: #fff;
+    overflow: auto;
+  }
+
+  .inner-app-content-noSideBar{
+    height:inherit;
+    padding: 20px;
+    margin: 20px auto;
+    background: #fff;
+    overflow: auto;
+    max-width: 1040px;
+  }
+
+  .inner-header-wrap{
+    width: 100%;
+    padding: 20px 10px;
+    background: #f5f5f5;
+    margin-bottom: 20px;
+  }
+
+  .clear::after{
+    content:"";
+    display: table;
+    clear: both;
+  }
+
+  .btn-cancel {
+    background: #e7e7e7 !important;
+    color: #777 !important;
+  }
+
+  .form-small-margin .ant-form-item{
+    margin-bottom: 5px;
+  }
+
+  .header-message-down{
+    position: absolute;
+    width: 340px;
+    padding: 20px;
+    background-color: red;
+    z-index: 1000;
+  }
+
+  .header-message{
+    position: relative;
+  }
+
+  .title-sub-h3{
+    position: relative;
+    font-size: 18px;
+    margin-bottom: 25px;
+    padding:0 0 0 2px;
+    line-height: 1;
+    border-bottom: 1px solid #e7e7e7;
+    > span{
+      display: inline-block;
+      max-width:100%;
+      padding:10px;
+      border: 1px solid transparent;
+      text-align: left;
+      -webkit-transition: 3s ease;
+      transition: .8s ease;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: text-bottom;
+    }
+
+    &[data-color="red"] > span{
+      border-bottom-color:#0898eb;
+    }
+
+    &[data-color="orange"] > span{
+      border-bottom-color:#0898eb;
+    }
+
+    &[data-color="green"] > span{
+      border-bottom-color:#0898eb;
+    }
+
+    &[data-color="blue"] > span{
+      border-bottom-color:#0898eb;
+    }
+  }
+
+  .blue-header{
+    min-width:885px !important;
+    min-height: 52px;
+    background: #1578e3;
+    color:#fff;
+    .header-logo{  background: #1268c4; }
+  }
+
+  .menu-list{
+    line-height: 52px;
+    >li{
+      float:left;
+      padding:0 25px;
+      cursor: pointer;
+
+      &.active{ color:#eba316; }
+
+      >i{
+        font-size: 18px;
+        margin-right: 6px;
+      }
+    }
+
+  }
+
+  .sidebar_navLink {
+    width: 100%;
+    line-height: 42px;
+    height: 42px;
+    display: block;
+    color: #c3c3c3;
+    padding-left: 18px;
+    font-size: 14px;
+    >span {
+      margin-left: 8px;
+    }
+  }
+  .sidebar_navLink_active {
+    color: #108ee9;
+    border-right: 3px solid #108ee9;
+    background: rgb(52, 64, 86);
+    border-bottom: none ;
+    >span {
+      margin-left: 8px;
+    }
+  }
+
+  .dialog_fast_animation-enter{
+    animation-duration: .25s;
+    animation-timing-function: ease-in;
+  }
+
+  .dialog_fast_animation-enter-active{
+    animation-name:dialogScaleEnter;
+  }
+
+  .dialog_fast_animation-leave{
+    animation-duration: 0s ;
+    animation-timing-function: ease-out;
+  }
+
+  .dialog_fast_animation-leave-active{
+    animation-name:dialogScaleOut;
+  }
+
+  .deleteModal  .ant-modal-body{
+    font-size: 18px;
+    text-align: center;
+    padding: 40px 0;
+  }
+
+  /** menu active 样式 ***/
+  .ant-menu-item:active, .ant-menu-submenu-title:active{
+    background: transparent !important;
+  }
+
+  /*******table表格********/
+  .order_table span > a+a{
+    margin-left:10px;
+  }
+  .order_table .ant-table-title {
+    font-size: 14px;
+    padding: 12px 20px!important;
+    color: #333;
+  }
+  .order_table table thead.ant-table-thead tr th{
+    padding: 9px 0 !important;
+    background: #f0f0f0;
+    /*border-right: 1px solid #e1e1e1;*/
+  }
+  .order_table table thead.ant-table-thead tr th span{
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .order_table table tr th {
+    min-width: 60px;
+    text-align: center;
+  }
+  .order_table .ant-table-tbody {
+    background: #fff
+  }
+  .order_table .ant-table-tbody > tr > td, .ant-table-thead > tr > td {
+    padding: 0 4px!important;
+    height: 39px;
+    text-align: center;
+    border-right: 1px solid #ededed;
+  }
+  .order_table .ant-table-tbody > tr > td:nth-child(1), .ant-table-thead > tr > td:nth-child(1) {
+    padding: 0 4px!important;
+    height: 39px;
+    text-align: center;
+    border-right: 1px solid #ededed;
+    border-left: 1px solid #ededed;
+  }
+
+  body.hideSlider{
+    #aside{  left:-200px !important;  }
+
+    #app-content{ margin-left:0 !important; }
+  }
+
+  /**
+  @media screen and (max-width:900px) {
+      #aside{
+          left:-200px !important;
+      }
+      #app-content{
+          margin-left:0 !important;
+      }
+  }
+  **/
+}
+
