@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { CanvasContext } from "components/CanvasContext";
+import React, { useContext, useRef } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC<{
+	dispatch?: React.DispatchWithoutAction;
+}> = () => {
+	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const dispatch = useContext(CanvasContext);
+	const handleClick = (e: React.MouseEvent) => {
+		const { pageX, pageY } = e;
+		//  = canvasRef.current?.getBoundingClientRect();
+		const canvas = canvasRef.current;
+		if (!canvas) {
+			return;
+		}
+		const rect = canvas.getBoundingClientRect();
+		if (!rect) {
+			return;
+		}
+		const { left, top } = rect;
+		// console.log(pageX, pageY, left, top);
+		// dispatch({
+		// 	type,
+		// });
+	};
+
+	return (
+		<div className="App">
+			<div>22222</div>
+			<canvas
+				style={{
+					height: "100vh",
+					width: "100vw",
+				}}
+				onClick={handleClick}
+				ref={canvasRef}
+			></canvas>
+		</div>
+	);
+};
 
 export default App;
