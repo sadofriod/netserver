@@ -1,12 +1,11 @@
-import { CanvasContext } from "components/CanvasContext";
-import React, { useContext, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "./App.css";
-
+import NodeComp from "./components/Node";
 const App: React.FC<{
-	dispatch?: React.DispatchWithoutAction;
-}> = () => {
+	dispatch: Components.ContextAction;
+}> = (props) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
-	const dispatch = useContext(CanvasContext);
+	const { dispatch } = props;
 	const handleClick = (e: React.MouseEvent) => {
 		const { pageX, pageY } = e;
 		//  = canvasRef.current?.getBoundingClientRect();
@@ -19,23 +18,30 @@ const App: React.FC<{
 			return;
 		}
 		const { left, top } = rect;
-		// console.log(pageX, pageY, left, top);
-		// dispatch({
-		// 	type,
-		// });
+		// console.log("dd", );
 	};
+
+	useEffect(() => {
+		dispatch({
+			type: "INIT_BASIC_CANVAS",
+			payload: canvasRef.current,
+		});
+	}, []);
 
 	return (
 		<div className="App">
-			<div>22222</div>
+			<div className="menuList">
+				<div>ADD</div>
+			</div>
 			<canvas
 				style={{
-					height: "100vh",
+					height: "90vh",
 					width: "100vw",
 				}}
 				onClick={handleClick}
 				ref={canvasRef}
 			></canvas>
+			<NodeComp></NodeComp>
 		</div>
 	);
 };

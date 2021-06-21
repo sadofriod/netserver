@@ -11,12 +11,18 @@ declare namespace Common {
 		FONT_COLOR,
 	}
 
-	interface Node extends NodeData {
+	interface NodeStyle {
 		height: number;
 		width: number;
 		x: number;
 		y: number;
-		color: Colors;
+		color: string;
+	}
+
+	// type Node = NodeStyle & NodeData;
+	interface Node {
+		style: NodeStyle;
+		data: NodeData;
 	}
 
 	type PathData = NodeData[];
@@ -43,12 +49,12 @@ declare namespace Components {
 		};
 	}
 
-	type ActionType = "ADD_NODE" | "DELETE_NODE" | "UPDATE_NODE" | "UPDATE_CANVAS_ATTR";
+	type ActionType = "ADD_NODE" | "DELETE_NODE" | "UPDATE_NODE" | "UPDATE_CANVAS_ATTR" | "INIT_BASIC_CANVAS";
 
-	type ContextAction = <P = any>(
-		...arg: Any[]
-	) => {
+	interface ActionParams<P = any> {
 		type: ActionType;
-		payload: p;
-	};
+		payload: P;
+	}
+
+	type ContextAction = <P = any>(params: ActionParams) => ActionParams;
 }

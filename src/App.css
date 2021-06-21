@@ -1,3 +1,11 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
+.menuList{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  color: #fff;
+}
+
