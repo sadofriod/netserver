@@ -3,13 +3,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import CanvasContext from "components/CanvasContext";
-const Main = App as any;
 ReactDOM.render(
 	<React.StrictMode>
-		<CanvasContext>
-			<Main />
-		</CanvasContext>
+			<App />
 	</React.StrictMode>,
 	document.getElementById("root")
 );
