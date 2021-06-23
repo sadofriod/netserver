@@ -44,12 +44,19 @@ const reduce = produce((state: Components.ContextState, action: ReturnType<Compo
 });
 
 export const CanvasContext = React.createContext(initialState);
+export const [state, dispatch] = useReducer(reduce as any, initialState);
+
+export const connect: Components.Connect = (dependence) => {
+	const props = dependence(state as any);
+
+	return;
+};
 
 const CanvasProvider: React.FC = ({ children }) => {
 	// const Context = React.createContext(initialState);
-	const [state, dispatch] = useReducer(reduce as any, initialState);
 
-	return <CanvasContext.Provider value={state as any}>{React.cloneElement(children as any, { dispatch: (dispatch as unknown) as Components.ContextAction })}</CanvasContext.Provider>;
+	// return <CanvasContext.Provider value={state as any}>{React.cloneElement(children as any, { dispatch: (dispatch as unknown) as Components.ContextAction })}</CanvasContext.Provider>;
+	return <CanvasContext.Provider value={state as any}>{children}</CanvasContext.Provider>;
 };
 
 export default CanvasProvider;

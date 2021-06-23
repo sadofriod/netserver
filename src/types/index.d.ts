@@ -25,6 +25,15 @@ declare namespace Common {
 		data: NodeData;
 	}
 
+	interface NodeProps<S = {}> extends Partial<S> {
+		code: string;
+	}
+
+	interface NodeContextState {
+		style: NodeStyle;
+		data: NodeData;
+	}
+
 	type PathData = NodeData[];
 }
 
@@ -47,7 +56,20 @@ declare namespace Components {
 			offsetX: number;
 			offsetY: number;
 		};
+		nodes: {
+			[code: string]: Node;
+		};
 	}
+
+	type ConnectComponent = <P = {}>(C: React.FC<P>) => React.FC<P>;
+
+	type Connect = <P = {}>(
+		dependence: (
+			state: ContextState
+		) => {
+			[key: string]: any;
+		}
+	) => ConnectComponent<P>;
 
 	type ActionType = "ADD_NODE" | "DELETE_NODE" | "UPDATE_NODE" | "UPDATE_CANVAS_ATTR" | "INIT_BASIC_CANVAS";
 

@@ -1,7 +1,8 @@
 import React from "react";
+import { connect } from "./CanvasContext";
 
-const Node: React.FC<Partial<Common.Node>> = (props) => {
-	const { style, data } = props;
+const Node: React.FC<Common.NodeProps<Common.NodeContextState>> = (props) => {
+	const { code } = props;
 	// const { x, y, height, width } = style;
 	// const state = l
 	console.log(props);
@@ -9,4 +10,7 @@ const Node: React.FC<Partial<Common.Node>> = (props) => {
 	return <></>;
 };
 
-export default Node;
+export default connect((state) => {
+	const { nodes } = state;
+	return {};
+}, Node);
