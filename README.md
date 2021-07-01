@@ -1,6 +1,6 @@
 # Directed graph drawer
 
-- [ ] Use Typesctipt
+- [ x ] Use Typesctipt
 - [ ] Node drawing
 - [ ] Path drawing
 - [ ] Directed path drawing
