@@ -9,6 +9,7 @@ declare namespace Common {
 		PRIMART_COLOR,
 		PATH_COLOR,
 		FONT_COLOR,
+		2,
 	}
 
 	interface NodeStyle {
@@ -25,28 +26,38 @@ declare namespace Common {
 		data: NodeData;
 	}
 
-	interface NodeProps<S = {}> extends Partial<S> {
+	interface NodeProps<S> {
 		code: string;
+		node: S;
+		canvas: Components.CanvasContext["canvas"];
 	}
 
 	interface NodeContextState {
-		style: NodeStyle;
+		style: Partial<NodeStyle>;
 		data: NodeData;
+	}
+
+	interface LineProps {
+		start: number[];
+		end: number[];
+		color: string;
+		canvas: Components.CanvasContext["canvas"];
+		radin?: number;
 	}
 
 	type PathData = NodeData[];
 }
 
 declare namespace Components {
-	// interface CanvasContext {
-	// 	canvas: HTMLCanvasElement | null;
-	// }
+	interface CanvasContext {
+		canvas: HTMLCanvasElement;
+	}
 
 	interface ContextState {
-		canvas: CanvasContext["canvas"];
+		canvas: CanvasContext["canvas"] | null;
 		overlay: Partial<{
 			[code: string]: {
-				canvas: CanvasContext["canvas"];
+				canvas: CanvasContext["canvas"] | null;
 			};
 			cacheData: unknown;
 		}>;
@@ -58,6 +69,12 @@ declare namespace Components {
 		};
 		nodes: {
 			[code: string]: Node;
+		};
+		draggerAttr: {
+			x: number;
+			y: number;
+			height: number;
+			width: number;
 		};
 	}
 

@@ -8,55 +8,55 @@ const initialState: Components.ContextState = {
 		offsetX: NaN,
 		offsetY: NaN,
 	},
+	draggerAttr: {
+		x: 0,
+		y: 0,
+		height: 0,
+		width: 0,
+	},
 	overlay: {},
+	nodes: {},
 };
 
-const reduce = produce((state: Components.ContextState, action: ReturnType<Components.ContextAction>) => {
-	const { payload, type } = action;
+const reduce = (draft: Components.ContextState, action: ReturnType<Components.ContextAction>) => {
+	const result = produce(draft, (state) => {
+		const { payload, type } = action;
 
-	switch (type) {
-		case "ADD_NODE":
-			break;
-		case "DELETE_NODE":
-			break;
-		case "UPDATE_NODE":
-			break;
-		case "UPDATE_CANVAS_ATTR": {
-			const { clickX, clickY, offsetX, offsetY } = payload;
-			state.attr = {
-				clickX,
-				clickY,
-				offsetX,
-				offsetY,
-			};
-			break;
+		switch (type) {
+			case "ADD_NODE":
+				break;
+			case "DELETE_NODE":
+				break;
+			case "UPDATE_NODE":
+				break;
+			case "UPDATE_CANVAS_ATTR": {
+				const { clickX, clickY, offsetX, offsetY } = payload;
+				state.attr = {
+					clickX,
+					clickY,
+					offsetX,
+					offsetY,
+				};
+				break;
+			}
+			case "INIT_BASIC_CANVAS": {
+				state.canvas = payload;
+				break;
+			}
+			default:
+				break;
 		}
-		case "INIT_BASIC_CANVAS": {
-			state.canvas = payload.canvas;
-			break;
-		}
-		default:
-			break;
-	}
-	// console.log(JSON.stringify(state), payload);
+	});
 
-	return state;
-});
+	return result;
+};
 
 export const CanvasContext = React.createContext(initialState);
-export const [state, dispatch] = useReducer(reduce as any, initialState);
 
-export const connect: Components.Connect = (dependence) => {
-	const props = dependence(state as any);
-
-	return;
-};
-
-const CanvasProvider: React.FC = ({ children }) => {
-	// const Context = React.createContext(initialState);
-
-	// return <CanvasContext.Provider value={state as any}>{React.cloneElement(children as any, { dispatch: (dispatch as unknown) as Components.ContextAction })}</CanvasContext.Provider>;
-	return <CanvasContext.Provider value={state as any}>{children}</CanvasContext.Provider>;
+const CanvasProvider = ({ children }: any) => {
+	const [state, dispatch] = useReducer(reduce, initialState);
+	console.log("CanvasProvider", state);
+	return <CanvasContext.Provider value={state as any}>{children(state, dispatch)}</CanvasContext.Provider>;
 };
 
 export default CanvasProvider;
