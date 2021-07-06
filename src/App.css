@@ -10,6 +10,7 @@
   flex: 1;
   justify-content: center;
   color: #fff;
+  border: #222 solid;
 }
 .menuList > div{
   background-color: #222;

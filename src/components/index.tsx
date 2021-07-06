@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+
 import { Node } from "./Node";
 
 const Main: React.FC<{
@@ -22,6 +23,13 @@ const Main: React.FC<{
 		}
 		const { left, top } = rect;
 		// console.log("dd", );
+	};
+
+	const addNode = () => {
+		dispatch({
+			type: "ADD_NODE",
+			payload: {},
+		});
 	};
 
 	useEffect(() => {
@@ -50,8 +58,8 @@ const Main: React.FC<{
 							canvas={canvas}
 							node={{
 								style: {
-									height: 30,
-									width: 60,
+									height: 10,
+									width: 20,
 									x: 20,
 									y: 20,
 								},
