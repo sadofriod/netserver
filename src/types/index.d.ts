@@ -17,11 +17,11 @@ declare namespace Common {
 		width: number;
 		x: number;
 		y: number;
-		color: string;
+		color?: string;
 	}
 
 	// type Node = NodeStyle & NodeData;
-	interface Node {
+	interface Nodes {
 		style: NodeStyle;
 		data: NodeData;
 	}
@@ -33,7 +33,7 @@ declare namespace Common {
 	}
 
 	interface NodeContextState {
-		style: Partial<NodeStyle>;
+		style: NodeStyle;
 		data: NodeData;
 	}
 
@@ -50,7 +50,7 @@ declare namespace Common {
 
 declare namespace Components {
 	interface CanvasContext {
-		canvas: HTMLCanvasElement;
+		canvas: CanvasRenderingContext2D;
 	}
 
 	interface ContextState {
@@ -61,6 +61,7 @@ declare namespace Components {
 			};
 			cacheData: unknown;
 		}>;
+		currentNode: Common.Nodes | null;
 		attr: {
 			clickX: number;
 			clickY: number;
@@ -68,13 +69,10 @@ declare namespace Components {
 			offsetY: number;
 		};
 		nodes: {
-			[code: string]: Node;
+			[code: string]: Nodes;
 		};
-		draggerAttr: {
-			x: number;
-			y: number;
-			height: number;
-			width: number;
+		dragger: {
+			node: Common.Nodes | null;
 		};
 	}
 
@@ -96,4 +94,11 @@ declare namespace Components {
 	}
 
 	type ContextAction = <P = any>(params: ActionParams) => ActionParams;
+
+	interface DraggerAttr {
+		x: number;
+		y: number;
+		height: number;
+		width: number;
+	}
 }

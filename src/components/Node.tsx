@@ -7,11 +7,10 @@ export const Node: React.FC<Common.NodeProps<Common.NodeContextState>> = (props)
 	// const state = l
 	// console.log(props);
 	useEffect(() => {
-		const ctx = canvas.getContext("2d");
+		const ctx = canvas;
 		if (!ctx) {
 			return;
 		}
-		console.log("Node", props);
 
 		ctx.rect(x || 0, y || 0, width || 0, height || 0);
 		ctx.fill();
@@ -29,7 +28,7 @@ export const Line: React.FC<Common.LineProps> = (props) => {
 	// const x = start[0] + (end[0] - start[0]) * Math.cos(rad(start[0], start[1])) + (end[1] - start[1]) * Math.sin(rad(start[0], start[1]));
 	// const y = start[0] + (end[0] - start[0]) * -Math.sin(rad(start[0], start[1])) + (end[1] - start[1]) * Math.cos(rad(start[0], start[1]));
 	useEffect(() => {
-		const ctx = canvas.getContext("2d");
+		const ctx = canvas;
 		if (!ctx) {
 			return;
 		}

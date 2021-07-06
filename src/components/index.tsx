@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
-
+import Dragger from "./Dragger";
+import DraggerContainer from "./DraggerContainer";
 import { Node } from "./Node";
 
 const Main: React.FC<{
@@ -9,72 +10,64 @@ const Main: React.FC<{
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const { dispatch, state } = props;
 
-	const { canvas } = state;
-	const handleClick = (e: React.MouseEvent) => {
-		const { pageX, pageY } = e;
-		//  = canvasRef.current?.getBoundingClientRect();
-		const canvas = canvasRef.current;
-		if (!canvas) {
-			return;
-		}
-		const rect = canvas.getBoundingClientRect();
-		if (!rect) {
-			return;
-		}
-		const { left, top } = rect;
-		// console.log("dd", );
-	};
-
+	const { canvas, nodes, currentNode } = state;
 	const addNode = () => {
 		dispatch({
 			type: "ADD_NODE",
-			payload: {},
+			payload: {
+				style: {
+					x: 20 * Math.random(),
+					y: 20 * Math.random(),
+					width: 100,
+					height: 60,
+				},
+			},
 		});
 	};
 
+	// const renderNodes = (canvas: any, nodes: { [key: string]: Common.Nodes }) => {
+	// 	// const {nodes} = state;
+	// 	if (canvasRef.current) {
+	// 		console.log("trigger", canvasRef.current.width, canvasRef.current.height);
+
+	// 		canvas.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+	// 	}
+	// 	const codes = Object.keys(nodes);
+	// 	return codes.map((code) => {
+	// 		const item = nodes[code];
+	// 		return <Node key={code} canvas={canvas} node={item} code={code} />;
+	// 	});
+	// };
+
+	// useEffect(() => {
+	// 	if (canvas && canvasRef.current) {
+	// 		console.log("trigger", canvasRef.current.width, canvasRef.current.height);
+
+	// 		canvas.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+	// 		canvas.rect(currentNode?.style.x || 0, currentNode?.style.y || 0, currentNode?.style.width || 0, currentNode?.style.height || 0);
+	// 		canvas.fill();
+	// 	}
+	// });
+
 	useEffect(() => {
-		dispatch({
-			type: "INIT_BASIC_CANVAS",
-			payload: canvasRef.current,
-		});
+		if (canvasRef.current) {
+			dispatch({
+				type: "INIT_BASIC_CANVAS",
+				payload: canvasRef.current.getContext("2d"),
+			});
+		}
 	}, []);
 
 	return (
 		<div className="App">
 			<div className="menuList">
-				<div>ADD</div>
+				<div onClick={addNode}>ADD</div>
 			</div>
-			<div className="canvasContainer">
-				<canvas
-					style={{
-						height: "90vh",
-						width: "100vw",
-					}}
-					onClick={handleClick}
-					ref={canvasRef}
-				>
-					{canvas ? (
-						<Node
-							canvas={canvas}
-							node={{
-								style: {
-									height: 10,
-									width: 20,
-									x: 20,
-									y: 20,
-								},
-								data: {
-									next: [],
-									previous: [],
-									code: "test",
-								},
-							}}
-							code="test"
-						/>
-					) : null}
-				</canvas>
-				<div className="drag" />
-			</div>
+			<DraggerContainer dispatch={dispatch} canvasRef={canvasRef}>
+				<canvas width={document.body.clientWidth} height={0.9 * document.body.clientHeight} ref={canvasRef} />
+				{/* {canvas ? renderNodes(canvas, nodes) : null} */}
+				<Dragger node={currentNode} />
+			</DraggerContainer>
 		</div>
 	);
 };

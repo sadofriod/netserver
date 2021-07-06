@@ -1,5 +1,7 @@
 import React, { useReducer } from "react";
 import produce from "immer";
+import * as uuid from "uuid";
+
 const initialState: Components.ContextState = {
 	canvas: null,
 	attr: {
@@ -8,12 +10,10 @@ const initialState: Components.ContextState = {
 		offsetX: NaN,
 		offsetY: NaN,
 	},
-	draggerAttr: {
-		x: 0,
-		y: 0,
-		height: 0,
-		width: 0,
+	dragger: {
+		node: null,
 	},
+	currentNode: null,
 	overlay: {},
 	nodes: {},
 };
@@ -23,12 +23,44 @@ const reduce = (draft: Components.ContextState, action: ReturnType<Components.Co
 		const { payload, type } = action;
 
 		switch (type) {
-			case "ADD_NODE":
+			case "ADD_NODE": {
+				const { style } = payload;
+				const code = uuid.v4();
+				const node = {
+					style: style as Common.NodeStyle,
+					data: {
+						code,
+						previous: [],
+						next: [],
+					},
+				};
+				state.nodes[code] = node;
+				state.currentNode = node;
 				break;
+			}
 			case "DELETE_NODE":
 				break;
-			case "UPDATE_NODE":
+			case "UPDATE_NODE": {
+				// const code = state.currentNode?.data.code;
+				const { currentNode } = state;
+				const { x, y } = payload;
+
+				if (currentNode) {
+					const code = currentNode.data.code;
+					state.nodes[code].style = {
+						...state.nodes[code].style,
+						x,
+						y,
+					};
+					if (state.currentNode)
+						state.currentNode.style = {
+							...state.currentNode.style,
+							x,
+							y,
+						};
+				}
 				break;
+			}
 			case "UPDATE_CANVAS_ATTR": {
 				const { clickX, clickY, offsetX, offsetY } = payload;
 				state.attr = {
@@ -55,7 +87,6 @@ export const CanvasContext = React.createContext(initialState);
 
 const CanvasProvider = ({ children }: any) => {
 	const [state, dispatch] = useReducer(reduce, initialState);
-	console.log("CanvasProvider", state);
 	return <CanvasContext.Provider value={state as any}>{children(state, dispatch)}</CanvasContext.Provider>;
 };
 

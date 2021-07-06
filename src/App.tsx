@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 import CanvasContext from "components/CanvasContext";
 import Main from "components";
