@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 
 export const Node: React.FC<Common.NodeProps<Common.NodeContextState>> = (props) => {
 	const { code, node, canvas } = props;
@@ -6,15 +6,16 @@ export const Node: React.FC<Common.NodeProps<Common.NodeContextState>> = (props)
 	const { x, y, height, width } = style;
 	// const state = l
 	// console.log(props);
-	useEffect(() => {
+	useLayoutEffect(() => {
+		console.log("trigger");
+
 		const ctx = canvas;
 		if (!ctx) {
 			return;
 		}
-
-		ctx.rect(x || 0, y || 0, width || 0, height || 0);
-		ctx.fill();
-	}, [style]);
+		ctx.fillStyle = "#f00";
+		ctx.fillRect(x, y, width, height);
+	});
 	return <></>;
 };
 /**
@@ -27,7 +28,7 @@ export const Line: React.FC<Common.LineProps> = (props) => {
 	// const rad = (x: number, y: number) => Math.atan(y / x) * 180;
 	// const x = start[0] + (end[0] - start[0]) * Math.cos(rad(start[0], start[1])) + (end[1] - start[1]) * Math.sin(rad(start[0], start[1]));
 	// const y = start[0] + (end[0] - start[0]) * -Math.sin(rad(start[0], start[1])) + (end[1] - start[1]) * Math.cos(rad(start[0], start[1]));
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const ctx = canvas;
 		if (!ctx) {
 			return;

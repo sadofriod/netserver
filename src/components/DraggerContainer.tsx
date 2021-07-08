@@ -7,11 +7,13 @@ const DraggerContainer: React.FC<{
 	const { canvasRef, children, dispatch } = props;
 
 	const [isMoving, setMove] = useState(false);
-	// const [sPosition, setPosition] = useState({ sx: NaN, sy: NaN });
 
-	const handleClick = (e: React.MouseEvent) => {
-		const { pageX, pageY } = e;
-		//  = canvasRef.current?.getBoundingClientRect();
+	const [canvasOffset, setCanvasOffset] = useState({
+		x: 0,
+		y: 0,
+	});
+
+	const handleMouseDown = (e: React.MouseEvent) => {
 		const canvas = canvasRef.current;
 		if (!canvas) {
 			return;
@@ -21,27 +23,38 @@ const DraggerContainer: React.FC<{
 			return;
 		}
 		const { left, top } = rect;
-		console.log(left, top, pageX, pageY);
+		setCanvasOffset({
+			x: left,
+			y: top,
+		});
 		setMove(true);
-
-		// console.log("dd", );
 	};
+
+	const handleClick = () => {};
 
 	const handleMove = (e: React.MouseEvent) => {
 		const { pageX, pageY } = e;
-		// const { sx, sy } = sPosition;
+		const { x, y } = canvasOffset;
+		const canvas = canvasRef.current;
+		if (!canvas) {
+			return;
+		}
+		const ctx = canvas.getContext("2d");
+
 		if (!isMoving) return;
+		if (!ctx) return;
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		dispatch({
 			type: "UPDATE_NODE",
 			payload: {
-				x: pageX,
-				y: pageY,
+				x: pageX - x,
+				y: pageY - y,
 			},
 		});
 	};
 
 	return (
-		<div className="canvasContainer" onMouseDown={handleClick} onMouseUp={() => setMove(false)} onMouseMove={handleMove}>
+		<div className="canvasContainer" onMouseDown={handleMouseDown} onMouseUp={() => setMove(false)} onMouseMove={handleMove}>
 			{children}
 		</div>
 	);

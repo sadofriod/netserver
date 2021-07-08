@@ -5,6 +5,11 @@ declare namespace Common {
 		next: string[];
 	}
 
+	//Effective fucntion of reducer cases
+	interface ReducerHelper<T> {
+		(payload: T, state: Components.ContextState): void;
+	}
+
 	enum Colors {
 		PRIMART_COLOR,
 		PATH_COLOR,
@@ -52,7 +57,10 @@ declare namespace Components {
 	interface CanvasContext {
 		canvas: CanvasRenderingContext2D;
 	}
-
+	interface NodesOffsetSortedItem {
+		code: string;
+		offset: number;
+	}
 	interface ContextState {
 		canvas: CanvasContext["canvas"] | null;
 		overlay: Partial<{
@@ -71,6 +79,11 @@ declare namespace Components {
 		nodes: {
 			[code: string]: Nodes;
 		};
+		//Fast find match node
+		nodesOffset: {
+			xArray: NodesOffsetSortedItem[];
+			yArray: NodesOffsetSortedItem[];
+		};
 		dragger: {
 			node: Common.Nodes | null;
 		};
@@ -86,7 +99,7 @@ declare namespace Components {
 		}
 	) => ConnectComponent<P>;
 
-	type ActionType = "ADD_NODE" | "DELETE_NODE" | "UPDATE_NODE" | "UPDATE_CANVAS_ATTR" | "INIT_BASIC_CANVAS";
+	type ActionType = "ADD_NODE" | "DELETE_NODE" | "UPDATE_NODE" | "UPDATE_CANVAS_ATTR" | "INIT_BASIC_CANVAS" | "SELECT_NODE";
 
 	interface ActionParams<P = any> {
 		type: ActionType;

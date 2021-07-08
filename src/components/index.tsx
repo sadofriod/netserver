@@ -25,29 +25,13 @@ const Main: React.FC<{
 		});
 	};
 
-	// const renderNodes = (canvas: any, nodes: { [key: string]: Common.Nodes }) => {
-	// 	// const {nodes} = state;
-	// 	if (canvasRef.current) {
-	// 		console.log("trigger", canvasRef.current.width, canvasRef.current.height);
-
-	// 		canvas.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-	// 	}
-	// 	const codes = Object.keys(nodes);
-	// 	return codes.map((code) => {
-	// 		const item = nodes[code];
-	// 		return <Node key={code} canvas={canvas} node={item} code={code} />;
-	// 	});
-	// };
-
-	// useEffect(() => {
-	// 	if (canvas && canvasRef.current) {
-	// 		console.log("trigger", canvasRef.current.width, canvasRef.current.height);
-
-	// 		canvas.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-	// 		canvas.rect(currentNode?.style.x || 0, currentNode?.style.y || 0, currentNode?.style.width || 0, currentNode?.style.height || 0);
-	// 		canvas.fill();
-	// 	}
-	// });
+	const renderNodes = (canvas: any, nodes: { [key: string]: Common.Nodes }) => {
+		const codes = Object.keys(nodes);
+		return codes.map((code) => {
+			const item = nodes[code];
+			return <Node key={code} canvas={canvas} node={item} code={code} />;
+		});
+	};
 
 	useEffect(() => {
 		if (canvasRef.current) {
@@ -65,7 +49,7 @@ const Main: React.FC<{
 			</div>
 			<DraggerContainer dispatch={dispatch} canvasRef={canvasRef}>
 				<canvas width={document.body.clientWidth} height={0.9 * document.body.clientHeight} ref={canvasRef} />
-				{/* {canvas ? renderNodes(canvas, nodes) : null} */}
+				{canvas ? renderNodes(canvas, nodes) : null}
 				<Dragger node={currentNode} />
 			</DraggerContainer>
 		</div>
