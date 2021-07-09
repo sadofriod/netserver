@@ -22,6 +22,7 @@ declare namespace Common {
 		width: number;
 		x: number;
 		y: number;
+		zIndex: number;
 		color?: string;
 	}
 
@@ -57,6 +58,12 @@ declare namespace Components {
 	interface CanvasContext {
 		canvas: CanvasRenderingContext2D;
 	}
+
+	interface CurrentNode extends Common.Nodes {
+		xIndex: number;
+		yIndex: number;
+	}
+
 	interface NodesOffsetSortedItem {
 		code: string;
 		offset: number;
@@ -69,7 +76,7 @@ declare namespace Components {
 			};
 			cacheData: unknown;
 		}>;
-		currentNode: Common.Nodes | null;
+		currentNode: CurrentNode | null;
 		attr: {
 			clickX: number;
 			clickY: number;
@@ -99,7 +106,7 @@ declare namespace Components {
 		}
 	) => ConnectComponent<P>;
 
-	type ActionType = "ADD_NODE" | "DELETE_NODE" | "UPDATE_NODE" | "UPDATE_CANVAS_ATTR" | "INIT_BASIC_CANVAS" | "SELECT_NODE";
+	type ActionType = "ADD_NODE" | "DELETE_NODE" | "UPDATE_NODE" | "UPDATE_CANVAS_ATTR" | "INIT_BASIC_CANVAS" | "SELECT_NODE" | "UPDATE_CURRENT_NODE";
 
 	interface ActionParams<P = any> {
 		type: ActionType;
