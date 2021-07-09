@@ -1,20 +1,22 @@
 declare namespace Common {
 	interface NodeData {
 		code: string;
-		previous: string[];
-		next: string[];
-	}
-
-	//Effective fucntion of reducer cases
-	interface ReducerHelper<T> {
-		(payload: T, state: Components.ContextState): void;
-	}
-
-	enum Colors {
-		PRIMART_COLOR,
-		PATH_COLOR,
-		FONT_COLOR,
-		2,
+		previous: {
+			code: string;
+			pointCode: string;
+			style: React.CSSProperties;
+		}[];
+		next: {
+			code: string;
+			pointCode: string;
+			style: React.CSSProperties;
+		}[];
+		point?: {
+			code: string;
+			position: number[];
+			path: string;
+			style: React.CSSProperties;
+		}[];
 	}
 
 	interface NodeStyle {
@@ -30,6 +32,18 @@ declare namespace Common {
 	interface Nodes {
 		style: NodeStyle;
 		data: NodeData;
+	}
+
+	//Effective fucntion of reducer cases
+	interface ReducerHelper<T> {
+		(payload: T, state: Components.ContextState): void;
+	}
+
+	enum Colors {
+		PRIMART_COLOR,
+		PATH_COLOR,
+		FONT_COLOR,
+		2,
 	}
 
 	interface NodeProps<S> {
