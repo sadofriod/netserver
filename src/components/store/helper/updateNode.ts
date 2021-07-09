@@ -1,5 +1,3 @@
-import { insertOffsetArray } from "./common";
-
 const updateNode: Common.ReducerHelper<{ x: number; y: number }> = (payload, state) => {
 	const { currentNode } = state;
 	const { x, y } = payload;
