@@ -5,7 +5,7 @@ export const updateNodes: Common.ReducerHelper<{ x: number; y: number }> = (payl
 	const { x, y } = payload;
 
 	if (!currentNode) {
-		return;
+		return state;
 		// console.log(JSON.stringify(state.nodesOffset.xArray));
 	}
 	const code = currentNode.data.code;
@@ -15,6 +15,7 @@ export const updateNodes: Common.ReducerHelper<{ x: number; y: number }> = (payl
 		x,
 		y,
 	};
+	return state;
 
 	// const
 };
@@ -54,7 +55,7 @@ export const updateCurrentNode: Common.ReducerHelper<Common.Nodes> = (payload, s
 	const { currentNode, nodesOffset } = state;
 	const { xArray, yArray } = nodesOffset;
 	if (!currentNode) {
-		return;
+		return state;
 	}
 	const { yIndex, xIndex } = currentNode;
 
@@ -81,4 +82,5 @@ export const updateCurrentNode: Common.ReducerHelper<Common.Nodes> = (payload, s
 		xArray: newXArray.slice(),
 		yArray: newYArray.slice(),
 	};
+	return state;
 };

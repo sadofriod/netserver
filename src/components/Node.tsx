@@ -13,8 +13,6 @@ export const drawNode = (props: Common.NodeProps<Common.NodeContextState>) => {
 };
 
 export const renderNodes = (ctx: CanvasRenderingContext2D, nodes: { [key: string]: Common.Nodes }) => {
-	console.log(nodes);
-
 	const codes = Object.keys(nodes);
 	for (let index = 0; index < codes.length; index++) {
 		const code = codes[index];

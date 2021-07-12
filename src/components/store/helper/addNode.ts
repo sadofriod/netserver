@@ -23,5 +23,6 @@ const addNode: Common.ReducerHelper<{ style: Common.NodeStyle }> = (payload, sta
 		yArray: newYArray,
 	};
 	state.currentNode = { ...node, xIndex: nodesCount, yIndex: nodesCount };
+	return state;
 };
 export default addNode;

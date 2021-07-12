@@ -47,7 +47,7 @@ declare namespace Common {
 
 	//Effective fucntion of reducer cases
 	interface ReducerHelper<T> {
-		(payload: T, state: Components.ContextState): void;
+		(payload: T, state: Components.ContextState): Components.ContextState;
 	}
 
 	enum Colors {
