@@ -19,6 +19,37 @@ export const updateNodes: Common.ReducerHelper<{ x: number; y: number }> = (payl
 	// const
 };
 
+const updateOffsetArray = (
+	offsetArray: Components.NodesOffsetSortedItem[],
+	newNode: {
+		data: Common.NodeData;
+		offset: number;
+	},
+	oldOffsetIndex: number
+) => {
+	const { offset, data } = newNode;
+	const { code } = data;
+	const newIndex = binarySearch(
+		{
+			offset,
+			code,
+		},
+		offsetArray
+	);
+
+	offsetArray.splice(newIndex, 0, {
+		code,
+		offset,
+	});
+
+	offsetArray.splice(oldOffsetIndex, 1);
+
+	return {
+		index: newIndex,
+		array: offsetArray,
+	};
+};
+
 export const updateCurrentNode: Common.ReducerHelper<Common.Nodes> = (payload, state) => {
 	const { currentNode, nodesOffset } = state;
 	const { xArray, yArray } = nodesOffset;
@@ -28,40 +59,26 @@ export const updateCurrentNode: Common.ReducerHelper<Common.Nodes> = (payload, s
 	const { yIndex, xIndex } = currentNode;
 
 	const { style: currStyle, data } = payload;
-	const { code } = data;
 	const { x, y } = currStyle;
-	const newXIndex = binarySearch(
-		{
-			offset: x,
-			code,
-		},
+	const { index: newXIndex, array: newXArray } = updateOffsetArray(
 		xArray,
-		Math.floor(xArray.length / 2)
-	);
-	const newYIndex = binarySearch(
 		{
-			offset: y,
-			code,
-		},
-		yArray,
-		Math.floor(xArray.length / 2)
-	);
-	if (newXIndex >= xArray.length) {
-		xArray.push({
-			code: code,
+			data,
 			offset: x,
-		});
-		yArray.push({
-			code: code,
+		},
+		xIndex
+	);
+	const { index: newYIndex, array: newYArray } = updateOffsetArray(
+		yArray,
+		{
+			data,
 			offset: y,
-		});
-	} else {
-		const tempXOffset = xArray[xIndex];
-		const tempYOffset = yArray[yIndex];
-		xArray[xIndex] = { code: code, offset: x };
-		yArray[yIndex] = { code: code, offset: y };
-		xArray[newXIndex] = tempXOffset;
-		yArray[newYIndex] = tempYOffset;
-	}
+		},
+		yIndex
+	);
 	state.currentNode = { ...payload, yIndex: newYIndex, xIndex: newXIndex };
+	state.nodesOffset = {
+		xArray: newXArray.slice(),
+		yArray: newYArray.slice(),
+	};
 };
