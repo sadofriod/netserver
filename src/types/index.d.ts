@@ -1,22 +1,33 @@
 declare namespace Common {
 	interface NodeData {
+		//Node union code
 		code: string;
+
+		//Previous nodes
 		previous: {
 			code: string;
+			//Previous nodes points
 			pointCode: string;
 			style: React.CSSProperties;
 		}[];
+
+		//Next nodes points
 		next: {
 			code: string;
 			pointCode: string;
 			style: React.CSSProperties;
 		}[];
+
+		//Connection points
 		point?: {
 			code: string;
 			position: number[];
 			path: string;
 			style: React.CSSProperties;
 		}[];
+
+		//Node cache Data
+		extends?: any;
 	}
 
 	interface NodeStyle {
