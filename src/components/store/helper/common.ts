@@ -4,18 +4,26 @@ export const binarySearch = (item: Components.NodesOffsetSortedItem, array: Comp
 	let end = array.length - 1;
 	let result = 0;
 
-	while (start <= end) {
+	while (start < end) {
 		const mid = Math.floor(start + (end - start) / 2);
 		if (!array[mid]) {
 			return mid;
 		}
-		if (array[mid].offset > offset) {
+		if (array[mid].offset >= offset) {
 			end = mid - 1;
 		} else if (array[mid].offset < offset) {
 			end = mid + 1;
 			start = end;
 		} else {
 			result = mid;
+		}
+	}
+
+	if (start === end) {
+		if (offset <= array[end].offset) {
+			return end - 1;
+		} else {
+			return start + 1;
 		}
 	}
 

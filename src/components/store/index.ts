@@ -48,10 +48,13 @@ export default class Nodes implements Components.ContextState {
 	};
 
 	addNode = (payload: { style: Common.NodeStyle }) => new Nodes(addNode(payload, this));
+	// addNode = (payload: { style: Common.NodeStyle }) => addNode(payload, this);
 
 	updateNodes = (payload: { x: number; y: number }) => new Nodes(updateNodes(payload, this));
+	// updateNodes = (payload: { x: number; y: number }) => updateNodes(payload, this);
 
 	updateCurrentNodes = (payload: Common.Nodes) => new Nodes(updateCurrentNode(payload, this));
+	// updateCurrentNodes = (payload: Common.Nodes) => updateCurrentNode(payload, this);
 
 	renderNodes = () => {
 		if (!this.canvas) {
@@ -60,10 +63,12 @@ export default class Nodes implements Components.ContextState {
 		}
 		renderNodes(this.canvas, this.nodes);
 		return new Nodes(this);
+		// return this;
 	};
 
 	initialCanvas = (context: Components.ContextState["canvas"]) => {
 		this.canvas = context;
 		return new Nodes(this);
+		// return this;
 	};
 }

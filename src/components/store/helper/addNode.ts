@@ -5,7 +5,7 @@ const addNode: Common.ReducerHelper<{ style: Common.NodeStyle }> = (payload, sta
 	const { style } = payload;
 	const code = uuid.v4();
 	const node: Common.Nodes = {
-		style,
+		style: { ...style, zIndex: Object.keys(state.nodes).length },
 		data: {
 			code,
 			previous: [],

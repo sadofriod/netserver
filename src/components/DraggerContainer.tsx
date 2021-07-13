@@ -1,7 +1,7 @@
-import { useEffect, useLayoutEffect, useState } from "react";
-import { drawNode, renderNodes } from "./Node";
+import { useState } from "react";
 import Nodes from "./store";
-
+import { debounce } from "lodash";
+import { binarySearch } from "./store/helper/common";
 const DraggerContainer: React.FC<{
 	canvasRef: React.RefObject<HTMLCanvasElement>;
 	// dispatch: React.Dispatch<Components.ActionParams<any>>;
@@ -13,7 +13,6 @@ const DraggerContainer: React.FC<{
 	const { canvasRef, children, nodeIns, currentNode, nodes, ctx } = props;
 
 	const [isMoving, setMove] = useState(false);
-	console.log(nodeIns);
 
 	const [canvasOffset, setCanvasOffset] = useState({
 		x: 0,
@@ -39,7 +38,19 @@ const DraggerContainer: React.FC<{
 		setMove(true);
 	};
 
-	const handleClick = () => {};
+	const handleClick = (e: React.MouseEvent) => {
+		const { nodesOffset } = nodeIns;
+		// if(!currentNode) return;
+		const { xArray, yArray } = nodesOffset;
+		const { pageX, pageY } = e;
+		const xItem = binarySearch({ code: "", offset: pageX }, xArray);
+		const yItem = binarySearch({ code: "", offset: pageY }, yArray);
+		console.log(
+			xItem,
+			xArray.map((item) => item.offset),
+			xArray[xItem]
+		);
+	};
 
 	const updateSpecificNode = (style: Common.NodeStyle, data: Common.NodeData) => {
 		if (!currentNode) {
@@ -58,7 +69,7 @@ const DraggerContainer: React.FC<{
 	const handleMove = (e: React.MouseEvent) => {
 		if (!isMoving) return;
 		const { pageX, pageY } = e;
-		// const { x, y } = canvasOffset;
+		const { x, y } = canvasOffset;
 		const canvas = canvasRef.current;
 		if (!canvas) {
 			return;
@@ -68,8 +79,23 @@ const DraggerContainer: React.FC<{
 		if (!currentNode) return;
 		const { data, style } = currentNode;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		nodeIns
+			.updateNodes({ x: pageX - x, y: pageY - y })
+			// .updateCurrentNodes({
+			// 	data,
+			// 	style: {
+			// 		...style,
+			// 		x: pageX,
+			// 		y: pageY,
+			// 	},
+			// })
+			.renderNodes();
+		// debounce(() => {
+		// ctx.clearRect(0, 0, canvas.width, canvas.height);
+		// return nodeIns.updateNodes({ x: pageX, y: pageY }).updateCurrentNodes({ data, style }).renderNodes();
+		// }, 16)();
+		// ctx.clearRect(0, 0, canvas.width, canvas.height);
 		// updateSpecificNode({ ...style, x: pageX, y: pageY }, data);
-		nodeIns.updateNodes({ x: pageX, y: pageY }).updateCurrentNodes({ data, style }).renderNodes();
 	};
 
 	// useLayoutEffect(() => {
@@ -96,7 +122,7 @@ const DraggerContainer: React.FC<{
 	};
 
 	return (
-		<div className="canvasContainer" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMove}>
+		<div className="canvasContainer" onClick={handleClick} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMove}>
 			{children}
 		</div>
 	);

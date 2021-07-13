@@ -32,6 +32,7 @@ const Main: React.FC = (props) => {
 	// }, [ctx, nodes]);
 
 	// const
+	console.log("index rigger", currentNode);
 
 	useEffect(() => {
 		if (canvasRef.current) {
@@ -45,7 +46,7 @@ const Main: React.FC = (props) => {
 			<div className="menuList">
 				<div onClick={handleAddNode}>ADD</div>
 			</div>
-			<DraggerContainer nodes={nodes} nodeIns={nodesIns} currentNode={nodes[currentNode?.data.code || ""] || null} canvasRef={canvasRef} ctx={ctx}>
+			<DraggerContainer nodes={nodes} nodeIns={nodesIns} currentNode={currentNode} canvasRef={canvasRef} ctx={ctx}>
 				<canvas width={document.body.clientWidth} height={800} ref={canvasRef} />
 				<Dragger node={currentNode} />
 			</DraggerContainer>
