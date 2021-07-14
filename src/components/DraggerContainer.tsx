@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Nodes from "./store";
-import { debounce } from "lodash";
 import { binarySearch } from "./store/helper/common";
 const DraggerContainer: React.FC<{
 	canvasRef: React.RefObject<HTMLCanvasElement>;
@@ -19,7 +18,10 @@ const DraggerContainer: React.FC<{
 		y: 0,
 	});
 
-	const [tempNodes, setTempNodes] = useState(nodes);
+	// const [tempNodes, setTempNodes] = useState(nodes);
+
+	const [tempNodeIns, setTempNodesIns] = useState(nodeIns);
+	console.log(tempNodeIns, nodeIns);
 
 	const handleMouseDown = (e: React.MouseEvent) => {
 		const canvas = canvasRef.current;
@@ -52,20 +54,6 @@ const DraggerContainer: React.FC<{
 		);
 	};
 
-	const updateSpecificNode = (style: Common.NodeStyle, data: Common.NodeData) => {
-		if (!currentNode) {
-			return;
-		}
-		const { code } = data;
-		setTempNodes({
-			...tempNodes,
-			[code]: {
-				data,
-				style,
-			},
-		});
-	};
-
 	const handleMove = (e: React.MouseEvent) => {
 		if (!isMoving) return;
 		const { pageX, pageY } = e;
@@ -79,46 +67,22 @@ const DraggerContainer: React.FC<{
 		if (!currentNode) return;
 		const { data, style } = currentNode;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		nodeIns
-			.updateNodes({ x: pageX - x, y: pageY - y })
-			// .updateCurrentNodes({
-			// 	data,
-			// 	style: {
-			// 		...style,
-			// 		x: pageX,
-			// 		y: pageY,
-			// 	},
-			// })
-			.renderNodes();
-		// debounce(() => {
-		// ctx.clearRect(0, 0, canvas.width, canvas.height);
-		// return nodeIns.updateNodes({ x: pageX, y: pageY }).updateCurrentNodes({ data, style }).renderNodes();
-		// }, 16)();
-		// ctx.clearRect(0, 0, canvas.width, canvas.height);
-		// updateSpecificNode({ ...style, x: pageX, y: pageY }, data);
-	};
 
-	// useLayoutEffect(() => {
-	// 	if (!ctx) return;
-	// 	renderNodes(ctx, tempNodes);
-	// }, [tempNodes, ctx]);
+		tempNodeIns
+			.updateNodes({ x: pageX - x, y: pageY - y })
+			.updateCurrentNodes({
+				data,
+				style: {
+					...style,
+					x: pageX,
+					y: pageY,
+				},
+			})
+			.renderNodes();
+	};
 
 	const handleMouseUp = () => {
 		setMove(false);
-		if (!currentNode) return;
-		const { style } = currentNode;
-		const { x, y } = style;
-		// dispatch({
-		// 	type: "UPDATE_NODE",
-		// 	payload: {
-		// 		...currentNode,
-		// 		style: {
-		// 			...style,
-		// 			x,
-		// 			y,
-		// 		},
-		// 	},
-		// });
 	};
 
 	return (

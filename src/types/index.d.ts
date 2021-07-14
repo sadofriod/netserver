@@ -85,8 +85,8 @@ declare namespace Components {
 	}
 
 	interface CurrentNode extends Common.Nodes {
-		xIndex: number;
-		yIndex: number;
+		xIndex?: number;
+		yIndex?: number;
 	}
 
 	interface NodesOffsetSortedItem {
@@ -115,6 +115,8 @@ declare namespace Components {
 		nodesOffset: {
 			xArray: NodesOffsetSortedItem[];
 			yArray: NodesOffsetSortedItem[];
+			x2Array: NodesOffsetSortedItem[];
+			y2Array: NodesOffsetSortedItem[];
 		};
 		dragger: {
 			node: Common.Nodes | null;

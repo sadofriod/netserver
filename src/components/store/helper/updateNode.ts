@@ -1,12 +1,8 @@
-import { binarySearch } from "./common";
-
 export const updateNodes: Common.ReducerHelper<{ x: number; y: number }> = (payload, state) => {
 	const { currentNode } = state;
 	const { x, y } = payload;
-	// const { xArray, yArray } = nodesOffset;
 	if (!currentNode) {
 		return state;
-		// console.log(JSON.stringify(state.nodesOffset.xArray));
 	}
 	const { data } = currentNode;
 	const { code } = data;
@@ -16,49 +12,7 @@ export const updateNodes: Common.ReducerHelper<{ x: number; y: number }> = (payl
 		y,
 	};
 	state.nodes[code].style = newStyle;
-
-	// const { index: newXIndex, array: newXArray } = updateOffsetArray(
-	// 	xArray,
-	// 	{
-	// 		data,
-	// 		offset: x,
-	// 	},
-	// 	xIndex
-	// );
-	// const { index: newYIndex, array: newYArray } = updateOffsetArray(
-	// 	yArray,
-	// 	{
-	// 		data,
-	// 		offset: y,
-	// 	},
-	// 	yIndex
-	// );
-
-	// state.currentNode = {
-	// 	...currentNode,
-	// 	xIndex: newXIndex,
-	// 	yIndex: newYIndex,
-	// 	style: {
-	// 		...style,
-	// 		x,
-	// 		y,
-	// 	},
-	// };
-	return updateCurrentNode(state.nodes[code], state);
-
-	// const
-};
-
-const isRemoveOlditem = (offsetArray: Components.NodesOffsetSortedItem[], oldOffsetIndex: number, code: string) => {
-	if (!offsetArray[oldOffsetIndex]) {
-		if (offsetArray[offsetArray.length - 1].code === code) {
-			return true;
-		}
-		if (offsetArray[0].code === code) {
-			return true;
-		}
-	}
-	if (code === offsetArray[oldOffsetIndex].code) return true;
+	return state;
 };
 
 const updateOffsetArray = (
@@ -66,68 +20,48 @@ const updateOffsetArray = (
 	newNode: {
 		data: Common.NodeData;
 		offset: number;
-	},
-	oldOffsetIndex: number
+	}
 ) => {
 	const { offset, data } = newNode;
 	const { code } = data;
-	const newIndex = binarySearch(
-		{
-			offset,
-			code,
-		},
-		offsetArray
-	);
-	// if (!offsetArray[oldOffsetIndex]) {
-	// 	if (offsetArray[offsetArray.length - 1].code === code) {
-	// 		offsetArray.splice(oldOffsetIndex, 1);
-	// 	}
-	// 	if (offsetArray[0].code === code) {
-	// 		offsetArray.splice(oldOffsetIndex, 1);
-	// 	}
-	// }
-	if (isRemoveOlditem(offsetArray, oldOffsetIndex, code)) offsetArray.splice(oldOffsetIndex, 1);
-	offsetArray.splice(newIndex, 0, {
-		code,
-		offset,
-	});
-	return {
-		index: newIndex,
-		array: offsetArray,
-	};
+	// debugger;
+	const newNodeIndex = offsetArray.findIndex((item) => item.code === code);
+	if (newNodeIndex !== -1) {
+		offsetArray[newNodeIndex].offset = offset;
+	}
+	return offsetArray;
 };
 
 export const updateCurrentNode: Common.ReducerHelper<Common.Nodes> = (payload, state) => {
 	const { currentNode, nodesOffset } = state;
-	const { xArray, yArray } = nodesOffset;
+	const { xArray, yArray, x2Array, y2Array } = nodesOffset;
 	if (!currentNode) {
 		return state;
 	}
-	const { yIndex, xIndex } = currentNode;
+	const { data } = currentNode;
 
-	const { style: currStyle, data } = payload;
-	const { x, y } = currStyle;
-	const { index: newXIndex, array: newXArray } = updateOffsetArray(
-		xArray,
-		{
-			data,
-			offset: x,
-		},
-		xIndex
-	);
-	const { index: newYIndex, array: newYArray } = updateOffsetArray(
-		yArray,
-		{
-			data,
-			offset: y,
-		},
-		yIndex
-	);
-	state.currentNode = { ...payload, yIndex: newYIndex, xIndex: newXIndex };
+	const { style: currStyle } = payload;
+	const { x, y, height, width } = currStyle;
+
+	state.currentNode = { ...payload };
 
 	state.nodesOffset = {
-		xArray: newXArray.slice(),
-		yArray: newYArray.slice(),
+		xArray: updateOffsetArray(xArray, {
+			data,
+			offset: x,
+		}).sort((curr, next) => curr.offset - next.offset),
+		yArray: updateOffsetArray(yArray, {
+			data,
+			offset: y,
+		}).sort((curr, next) => curr.offset - next.offset),
+		y2Array: updateOffsetArray(y2Array, {
+			data,
+			offset: y + height,
+		}).sort((curr, next) => curr.offset - next.offset),
+		x2Array: updateOffsetArray(x2Array, {
+			data,
+			offset: x + width,
+		}).sort((curr, next) => curr.offset - next.offset),
 	};
 	return state;
 };

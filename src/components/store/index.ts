@@ -20,6 +20,8 @@ export default class Nodes implements Components.ContextState {
 	nodesOffset: Components.ContextState["nodesOffset"] = {
 		xArray: [],
 		yArray: [],
+		x2Array: [],
+		y2Array: [],
 	};
 	constructor(nodes?: Components.ContextState) {
 		if (!nodes) return this;
@@ -72,3 +74,25 @@ export default class Nodes implements Components.ContextState {
 		// return this;
 	};
 }
+
+export const initialState: Components.ContextState = {
+	canvas: null,
+	attr: {
+		clickX: NaN,
+		clickY: NaN,
+		offsetX: NaN,
+		offsetY: NaN,
+	},
+	dragger: {
+		node: null,
+	},
+	currentNode: null,
+	overlay: {},
+	nodes: {},
+	nodesOffset: {
+		xArray: [],
+		yArray: [],
+		x2Array: [],
+		y2Array: [],
+	},
+};

@@ -11,6 +11,8 @@ const Main: React.FC = (props) => {
 	const { nodes, currentNode, canvas: ctx } = nodesIns.getNodes();
 	// const { canvas: ctx, nodes, currentNode } = state;
 	// console.log(nodesOffset.xArray.map((item) => item.offset));
+	console.log("trigger");
+
 	const handleAddNode = () => {
 		setNodesIns(
 			nodesIns
