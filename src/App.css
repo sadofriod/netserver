@@ -38,7 +38,7 @@
 }
 .drag{
   position: absolute;
-  border: #222 dashed 1px;
+  border: #222 dashed 2px;
   top: 0;
   left: 0;
   cursor: move;
@@ -90,4 +90,23 @@ details[open] summary {
 input{
     padding: .5em;
     
+}
+
+button{
+  font-size: 12px;
+  border: 1px solid #999999;
+  background-color: #ffffff;
+  color: #222;
+  cursor: pointer;
+}
+
+button:disabled,
+button[disabled]{
+  font-size: 12px;
+
+
+  border-color: #ccc;
+  border-radius: 5px;
+  background-color: #aaa;
+  color: #fff;
 }

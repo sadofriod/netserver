@@ -9,19 +9,24 @@ const testData = {
 
 		textStyle: {
 			color: "#D8D8D8",
+			grid1: {
+				containLabel: true,
+				top: "50",
+				grid2: {
+					containLabel: true,
+					top: "50",
+					grid3: {
+						containLabel: true,
+						top: "50",
+						grid4: {
+							containLabel: true,
+							top: "50",
+						},
+					},
+				},
+			},
 		},
 	},
-	series: [
-		{ name: "test1" },
-		{ name: "test2" },
-		{ name: "test3" },
-		{ name: "test4" },
-		{ name: "test5" },
-		{ name: "test6" },
-		{ name: "test7" },
-		{ name: "test8" },
-		{ name: "test9" },
-		{ name: "test10" },
-	],
+	series: [{ name: "张三" }, { name: "李四" }, { name: "王五" }],
 };
 export default testData;

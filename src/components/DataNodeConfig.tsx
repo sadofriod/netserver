@@ -113,11 +113,17 @@ const Config: React.FC<
 	}
 > = (props) => {
 	const { currentNode, nodes, dispatch, needDirectDataSource } = props;
+
 	const handleChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
 		if (e.target.value === "default") {
 			dispatch("updateNodeDataCache", data);
 		}
 	};
+
+	const handleOperationChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+		dispatch("updateNodeOperationType", e.target.value);
+	};
+
 	return (
 		<div>
 			<div style={{ padding: "5px", display: "flex", alignItems: "center" }}>
@@ -139,7 +145,7 @@ const Config: React.FC<
 					) : (
 						<div style={{ padding: "5px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 							<label>选择节点操作:</label>
-							<select style={{ flex: 1 }} onChange={handleChange} placeholder="选择数据来源">
+							<select style={{ flex: 1 }} onChange={handleOperationChange} placeholder="选择数据来源">
 								<option key={"unknow"} value={"unknow"}>
 									{"未选择"}
 								</option>
@@ -158,7 +164,7 @@ const Config: React.FC<
 					</details>
 					<details>
 						<summary>输出节点</summary>
-						<DataOutputGenerator auxiliary={currentNode.data.auxiliary} dispatch={dispatch} />
+						<DataOutputGenerator points={nodes[currentNode.code].point} auxiliary={currentNode.data.auxiliary} dispatch={dispatch} />
 					</details>
 					<details>
 						<summary>节点数据</summary>

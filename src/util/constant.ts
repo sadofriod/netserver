@@ -15,10 +15,10 @@ export enum Size {
 export const baseIntentNumber = 10;
 
 export const nodeBoxHeight = 30;
-export const nodeBoxWidth = 90;
+export const nodeBoxWidth = 120;
 export const nodeBoxOffsetHeight = nodeBoxHeight / 1.5;
 export const pointRadin = 5;
-
+export const fontSize = 12;
 export const nodeOperation: Common.NodeOperation[] = ["plus", "range-map"];
 
 export const canvasOperationStyle: React.CSSProperties = {

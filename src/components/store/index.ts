@@ -4,6 +4,7 @@ import addNode from "./helper/addNode";
 import {
 	// updateCurrentNode,
 	updateNodes,
+	updateNodeOperationType,
 } from "./helper/updateNode";
 import { useState } from "react";
 import selectNode from "./helper/selectNode";
@@ -66,6 +67,7 @@ export const useDispatch = (): [state: Components.ContextState, action: Common.A
 		deleteNode,
 		updatePoint,
 		updateNodeDataCache,
+		updateNodeOperationType,
 	};
 
 	const handle = (type: keyof Common.Actions, payload?: any) => {
@@ -107,6 +109,10 @@ export const useDispatch = (): [state: Components.ContextState, action: Common.A
 					break;
 				case "updateNodeDataCache":
 					draf = updateNodeDataCache(payload, state);
+					break;
+				case "updateNodeOperationType":
+					draf = updateNodeOperationType(payload, state);
+					actions.renderNode(draf);
 					break;
 				default:
 					break;

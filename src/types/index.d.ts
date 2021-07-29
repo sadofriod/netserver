@@ -113,6 +113,7 @@ declare namespace Common {
 			point: Partial<Common.Point>;
 		}>;
 		updateNodeDataCache: ReducerHelper<any>;
+		updateNodeOperationType: Common.ReducerHelper<Common.NodeOperation>;
 	}
 
 	type Action = (type: keyof Actions, payload?: any) => void;
@@ -206,7 +207,9 @@ declare namespace Components {
 	type ConnectComponent = <P = {}>(C: React.FC<P>) => React.FC<P>;
 
 	type Connect = <P = {}>(
-		dependence: (state: ContextState) => {
+		dependence: (
+			state: ContextState
+		) => {
 			[key: string]: any;
 		}
 	) => ConnectComponent<P>;

@@ -31,5 +31,16 @@ export const updateNodes: Common.ReducerHelper<{ x: number; y: number }> = (payl
 			y: point.style.y + y - oldY,
 		};
 	}
+
+	return state;
+};
+
+export const updateNodeOperationType: Common.ReducerHelper<Common.NodeOperation> = (payload, state) => {
+	const { currentNode } = state;
+	if (!currentNode) {
+		return state;
+	}
+	const { code } = currentNode;
+	state.nodes[code].operation = payload;
 	return state;
 };

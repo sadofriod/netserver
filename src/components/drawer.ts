@@ -1,4 +1,4 @@
-import { nodeBoxOffsetHeight, pointRadin } from "util/constant";
+import { fontSize, pointRadin } from "util/constant";
 
 export const drawNode = (props: Common.NodeProps<Common.Nodes>) => {
 	const { node, canvas } = props;
@@ -13,7 +13,7 @@ export const drawNode = (props: Common.NodeProps<Common.Nodes>) => {
 	ctx.fillStyle = type === "data" ? "#ceecf5" : "#c1e344";
 	ctx.strokeStyle = "#111";
 	roundRect(ctx, x, y, width, height, 5);
-	ctx.font = type === "data" ? "bold 12px Microsoft-YaHei" : "italic bold 12px Microsoft-YaHei";
+	ctx.font = type === "data" ? `bold ${fontSize}px Microsoft-YaHei` : `italic bold ${fontSize}px Microsoft-YaHei`;
 	ctx.fillStyle = "#222";
 	const operationText = operation || "unknow";
 	const text = type === "data" ? "defult-data" : operationText;
@@ -21,7 +21,7 @@ export const drawNode = (props: Common.NodeProps<Common.Nodes>) => {
 	// ctx.fillText("defult-data", x + 5, y + 5);
 	// ctx.font.fontcolor("#fff");
 
-	ctx.fillText(text, x + (width - textRect.width) / 2, y + nodeBoxOffsetHeight);
+	ctx.fillText(text, x + (width - textRect.width) / 2, y + (height + fontSize) / 2);
 };
 
 export const renderNodes = (ctx: CanvasRenderingContext2D, nodes: { [key: string]: Common.Nodes }) => {

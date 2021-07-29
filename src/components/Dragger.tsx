@@ -16,10 +16,10 @@ const Dragger: React.FC<Components.ContextState["dragger"]> = (props) => {
 			const { style } = node;
 			const { x, y, height, width } = style;
 			const newStyle = {
-				left: x - 2.8 + "px",
-				top: y - 2.8 + "px",
-				height: height + 4,
-				width: width + 4,
+				left: x - 5 + "px",
+				top: y - 5 + "px",
+				height: height + 6,
+				width: width + 6,
 			};
 			return {
 				...newStyle,
@@ -64,7 +64,7 @@ const Dragger: React.FC<Components.ContextState["dragger"]> = (props) => {
 					key={key}
 					onMouseEnter={() => handlePointHover(point)}
 					onMouseLeave={() => setCoord(null)}
-					style={{ cursor: "pointer", top: py - y - pointRadin, left: px - x - pointRadin, height: `${pointRadin * 2}px`, position: "absolute", width: `${pointRadin * 2}px` }}
+					style={{ cursor: "pointer", top: py - y - pointRadin / 2, left: px - x - pointRadin / 2, height: `${pointRadin * 2}px`, position: "absolute", width: `${pointRadin * 2}px` }}
 				></div>
 			);
 		});
