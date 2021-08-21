@@ -55,15 +55,37 @@ export const renderNodes = (ctx: CanvasRenderingContext2D, nodes: { [key: string
  */
 export const drawLine = (props: Common.LineProps) => {
 	const { start, end, canvas: ctx, color } = props;
-	// const rad = (x: number, y: number) => Math.atan(y / x) * 180;
-	// const x = start[0] + (end[0] - start[0]) * Math.cos(rad(start[0], start[1])) + (end[1] - start[1]) * Math.sin(rad(start[0], start[1]));
-	// const y = start[0] + (end[0] - start[0]) * -Math.sin(rad(start[0], start[1])) + (end[1] - start[1]) * Math.cos(rad(start[0], start[1]));
-	if (!ctx) {
-		return;
-	}
+
+	const getMidCoord = (c1: number, c2: number) => {
+		if (c1 === c2) {
+			return c1;
+		}
+		return (c1 + c2) / 2;
+	};
+
+	const [x1, y1] = start;
+	const [x2, y2] = end;
+	const [midX, midY] = [getMidCoord(x1, x2), getMidCoord(y1, y2)];
+	const drawMirror = (y1: number, y2: number) => {
+		if (y1 > y2) {
+			return ctx.bezierCurveTo(control2[0], control2[1], control1[0], control1[1], end[0], end[1]);
+		} else {
+			return ctx.bezierCurveTo(control1[0], control1[1], control2[0], control2[1], end[0], end[1]);
+		}
+	};
+	const degCos = Math.cos(Math.atan((x1 - midX) / (y1 - midY)));
+
+	const lineLen = Math.sqrt(Math.pow(y1 - midY, 2) + Math.pow(x1 - midX, 2)) * 2;
+
+	const control1 = [midX, midY - degCos * (lineLen / 2)];
+	const control2 = [midX, midY + degCos * (lineLen / 2)];
+
 	ctx.beginPath();
 	ctx.moveTo(start[0], start[1]);
-	ctx.lineTo(end[0], end[1]);
+
+	ctx.fillText("c2", control2[0], control2[1]);
+	ctx.fillText("c1", control1[0], control1[1]);
+	drawMirror(y1, y2);
 	ctx.lineWidth = 2;
 	ctx.strokeStyle = color ? color : "#000";
 	ctx.stroke();

@@ -58,7 +58,6 @@ const Dragger: React.FC<Components.ContextState["dragger"]> = (props) => {
 		return pointKeys.map((key) => {
 			const point = points[key];
 			const { x: px, y: py } = point.style;
-			console.log(px, x);
 			return (
 				<div
 					key={key}
